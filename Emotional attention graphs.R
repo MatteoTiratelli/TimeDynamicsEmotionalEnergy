@@ -6,7 +6,7 @@ library(ggarrange)
 
 ## Collect data
 
-setwd('/Users/matteo/Desktop/Emotional Attention')
+setwd('/') # This should point to the folder containing the CollinsCurve.png file, which can be downloaded from this repository.
 
 search <- tibble(Event = c('Charlie Hebdo shooting (France)','November 2015 Paris attacks (France)',
                            '2016 Nice truck attack (France)','2016 Berlin truck attack (Germany)',
