@@ -6,8 +6,6 @@ library(ggarrange)
 
 ## Collect data
 
-setwd('/') # This should point to the folder containing the CollinsCurve.png file, which can be downloaded from this repository.
-
 search <- tibble(Event = c('Charlie Hebdo shooting (France)','November 2015 Paris attacks (France)',
                            '2016 Nice truck attack (France)','2016 Berlin truck attack (Germany)',
                            'Boston Marathon bombings (United States)','Manchester Arena bombing (United Kingdom)', # 8 most deadly recent terrorist attacks in USA and Western Europe
@@ -42,7 +40,10 @@ Output <- as_tibble(Output[-1,])
 Output <- merge(Output, search[,1:2], all.x = TRUE, by.x = 'keyword', by.y = 'TopicSearchCode')
 Output$Event <- as.factor(Output$Event)
 
+
 ## Reproduce Collins graph
+
+download.file("https://raw.githubusercontent.com/MatteoTiratelli/TimeDynamicsEmotionalEnergy/main/CollinsCurve.png", destfile = '/CollinsCurve.png', mode = 'wb')
 
 Collins <- ggplot(Output, aes(x=row.number, y=as.numeric(hits))) +
   theme_classic() + 
