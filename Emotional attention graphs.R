@@ -2,7 +2,6 @@ library(tidyverse)
 library(cowplot)
 library(magick)
 library(gtrendsR)
-library(ggarrange)
 
 ## Collect data
 
