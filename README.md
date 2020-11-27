@@ -13,4 +13,6 @@ This data visualisation uses Google Trends data to analyse the temporal pattern 
 
 Figure 1: The Time-Dynamics of Emotional Energy
 ![Data visualisation](https://github.com/MatteoTiratelli/TimeDynamicsEmotionalEnergy/blob/main/DataVis.png)
+
+# Appendix
 ![Appendix](https://github.com/MatteoTiratelli/TimeDynamicsEmotionalEnergy/blob/main/Appendix/Appendix.png)
