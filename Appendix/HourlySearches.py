@@ -17,8 +17,6 @@ search_df['year_e'] = [2015,2015,2016,2016,2013,2017,2016,2017]
 search_df['month_e'] = [1,11,7,12,4,5,3,8]
 search_df['day_e'] = [12,18,19,24,20,27,27,22]
 search_df['hour_e'] = [1,1,1,1,1,1,1,1]
-search_df.head()
-
 
 pytrends = TrendReq()
 for row in search_df.itertuples():
