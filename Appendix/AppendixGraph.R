@@ -1,6 +1,8 @@
 library(tidyverse)
 library(cowplot)
 
+## Compile pytrends output
+
 setwd("/Users/matteo/Downloads/export")
 
 data <- read_csv("0.csv")
@@ -8,7 +10,7 @@ names(data)[2] <- 'Terror'
 data %>%
   mutate(row.number = row_number()) -> data
 
-for (i in (c(1,2,3,5,6,7))){ # PyTrends returns an empty dataset for the Berlin Truck Attacks
+for (i in (c(1,2,3,5,6,7))){ # Hourly Google data not available for the Boston Marathon Bombing
   filename = paste0(i,".csv")
   read_csv(filename) -> temp
   names(temp)[2] <- 'Terror'
@@ -18,7 +20,9 @@ for (i in (c(1,2,3,5,6,7))){ # PyTrends returns an empty dataset for the Berlin 
 }
 
 data$Event <- as.factor(data$Event)
-data$Event <- fct_relevel(data$Event, "Charlie Hebdo shooting", after = Inf)
+data$Event <- fct_relevel(data$Event, "Charlie Hebdo shooting", after = Inf) # Move Charlie Hebdo to the bottom of the facet grid to emphasise its unique pattern
+
+## Plot and save faceted graph
 
 ggplot(data, aes(x=row.number, y=as.numeric(Terror))) +
   geom_line() + 
@@ -33,6 +37,5 @@ ggplot(data, aes(x=row.number, y=as.numeric(Terror))) +
         panel.background = element_rect(fill = "transparent", colour = NA),
         plot.background = element_rect(fill = "transparent", colour = NA),
         legend.background= element_rect(fill = "transparent", colour = NA)) -> Appendix
-
 
 save_plot("Appendix.pdf", Appendix, base_width = 8.7, base_height = 7, units = "in")
