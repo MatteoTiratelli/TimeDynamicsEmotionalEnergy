@@ -1,6 +1,8 @@
 import pandas as pd
 from pytrends.request import TrendReq
 
+# Set up dataframe of search specifications
+
 search_df = pd.DataFrame()
 search_df["Event"] = ['Charlie Hebdo shooting','November 2015 Paris attacks',
                            '2016 Nice truck attack','2016 Berlin truck attack',
@@ -18,6 +20,8 @@ search_df['month_e'] = [1,11,7,12,4,5,3,8]
 search_df['day_e'] = [12,18,19,24,20,27,27,22]
 search_df['hour_e'] = [1,1,1,1,1,1,1,1]
 
+# Execute pytrends search by row and save output as separate csv file
+
 pytrends = TrendReq()
 for row in search_df.itertuples():
     try:
@@ -29,8 +33,8 @@ for row in search_df.itertuples():
                                              month_end=row.month_e, day_end=row.day_e, hour_end=row.hour_e)
         interest_over_time_df["Event"] = row.Event
         interest_over_time_df.to_csv(f"/Users/matteo/Downloads/export/{row.Index}.csv")
-        print(f"{row.Index} was succesfully pulled from Google Trends")
+        print(f"{row.Event} succesfully downloaded")
     except Exception as e:
-        print(f"{row.Index} was not successfully pulled because of the following error:" + str(e))
+        print(f"{row.Event} not downloaded because of the following error:" + str(e))
         continue  
 
