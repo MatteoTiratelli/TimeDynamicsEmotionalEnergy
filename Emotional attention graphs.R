@@ -5,6 +5,8 @@ library(gtrendsR)
 
 ## Collect data
 
+# Set up search specifications
+
 search <- tibble(Event = c('Charlie Hebdo shooting (France)','November 2015 Paris attacks (France)',
                            '2016 Nice truck attack (France)','2016 Berlin truck attack (Germany)',
                            'Boston Marathon bombings (United States)','Manchester Arena bombing (United Kingdom)', # 8 most deadly recent terrorist attacks in USA and Western Europe
@@ -15,6 +17,8 @@ search <- tibble(Event = c('Charlie Hebdo shooting (France)','November 2015 Pari
                  Date = c("2015-01-07 2015-09-07", "2015-11-13 2016-07-13", "2016-07-14 2017-03-14", "2016-12-19 2017-08-19",
                           "2013-04-15 2013-12-15", "2017-05-22 2018-01-22","2016-03-22 2016-11-22","2017-08-17 2018-04-17")) # Date of attack plus 8 months
 
+# Download gtrends data to list
+
 results <- vector("list", length = length(search$Event))
 
 for (i in 1:length(search$Event)){
@@ -22,6 +26,9 @@ for (i in 1:length(search$Event)){
           geo = search$Country[i],
           time = search$Date[i]) -> results[[i]]
 }
+
+# Compile results into single tibble
+
 Output <- data.frame(date = as.Date(as.character('2012-01-01')),
                      hits = as.character(2010),
                      keyword = as.character('2010'),
@@ -35,6 +42,7 @@ for (i in 1:length(search$Event)){
     mutate(row.number = row_number()) -> temp
   bind_rows(Output, temp) -> Output
 }
+
 Output <- as_tibble(Output[-1,])
 Output <- merge(Output, search[,1:2], all.x = TRUE, by.x = 'keyword', by.y = 'TopicSearchCode')
 Output$Event <- as.factor(Output$Event)
@@ -61,7 +69,7 @@ ggdraw() +
   draw_plot(Collins) -> panel_a
 
 
-## Original graph
+## Create new graph
 
 panel_b <- ggplot(Output, aes(x=row.number, y=as.numeric(hits), linetype=Event)) +
   geom_line() + 
@@ -78,7 +86,7 @@ panel_b <- ggplot(Output, aes(x=row.number, y=as.numeric(hits), linetype=Event))
         plot.background = element_rect(fill = "transparent", colour = NA),
         legend.background= element_rect(fill = "transparent", colour = NA))
 
-## Combine and save
+## Combine graphs and save
 
 plot_grid(panel_a, panel_b, axis = 'lb', ncol = 1) -> DataVis
 
