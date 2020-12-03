@@ -1,7 +1,7 @@
 library(tidyverse)
 library(cowplot)
 
-## Compile pytrends output
+## Compile 'HourlySearches.py' csv output
 
 setwd("/Users/matteo/Downloads/export")
 
