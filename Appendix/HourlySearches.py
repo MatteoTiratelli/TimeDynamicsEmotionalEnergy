@@ -20,8 +20,11 @@ search_df['month_e'] = [1,11,7,12,4,5,3,8]
 search_df['day_e'] = [12,18,19,24,20,27,27,22]
 search_df['hour_e'] = [1,1,1,1,1,1,1,1]
 
-# Execute pytrends search by row and save output as separate csv file
+# Execute pytrends search by row, save output as separate csv file and to dictionary of dataframes which can be accessed directly in R 
+# reticulate::py_run_file("https://raw.githubusercontent.com/MatteoTiratelli/TimeDynamicsEmotionalEnergy/main/Appendix/HourlySearches.py")
+# list_of_dfs <- py$list_of_dfs
 
+list_of_dfs = {}
 pytrends = TrendReq()
 for row in search_df.itertuples():
     try:
@@ -32,6 +35,7 @@ for row in search_df.itertuples():
                                              hour_start=row.hour_s, year_end=row.year_e,
                                              month_end=row.month_e, day_end=row.day_e, hour_end=row.hour_e)
         interest_over_time_df["Event"] = row.Event
+        list_of_dfs[row.Event] = interest_over_time_df
         interest_over_time_df.to_csv(f"/Users/matteo/Downloads/export/{row.Index}.csv")
         print(f"{row.Event} succesfully downloaded")
     except Exception as e:
