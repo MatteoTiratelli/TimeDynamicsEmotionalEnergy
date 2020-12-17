@@ -71,18 +71,21 @@ ggdraw() +
 
 ## Create new graph
 
-panel_b <- ggplot(Output, aes(x=row.number, y=as.numeric(hits), linetype=Event)) +
+Output$Event <- as.factor(Output$Event)
+Output$Event <- fct_relevel(Output$Event, "Charlie Hebdo shooting", after = Inf)
+
+panel_b <- ggplot(Output, aes(x=row.number, y=as.numeric(hits))) +
   geom_line() + 
   theme_classic() + 
   xlab(NULL) +
-  ylab('Google Trends Index') +
+  ylab(NULL) +
   scale_x_continuous(breaks = c(14,90,180), 
                      labels = c('2 weeks', '3 months', '6 months')) +
   labs(caption = "Panel B: Google Trends Index of searches for each of the events listed, in the country where the event took place.") +
-  theme(plot.caption = element_text(hjust = 0),
+  facet_wrap(vars(Event), nrow = 4, ncol = 3) +
+  theme(plot.title.position = "plot",
         plot.caption.position =  "plot",
-        legend.position = c(0.7,0.6),
-        panel.background = element_rect(fill = "transparent", colour = NA),
+        plot.caption = element_text(hjust = 0),        panel.background = element_rect(fill = "transparent", colour = NA),
         plot.background = element_rect(fill = "transparent", colour = NA),
         legend.background= element_rect(fill = "transparent", colour = NA))
 
