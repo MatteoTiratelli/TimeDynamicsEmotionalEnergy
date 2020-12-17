@@ -7,10 +7,11 @@ library(gtrendsR)
 
 # Set up search specifications
 
-search <- tibble(Event = c('Charlie Hebdo shooting (France)','November 2015 Paris attacks (France)',
-                           '2016 Nice truck attack (France)','2016 Berlin truck attack (Germany)',
-                           'Boston Marathon bombings (United States)','Manchester Arena bombing (United Kingdom)', # 8 most deadly recent terrorist attacks in USA and Western Europe
-                           '2016 Brussels bombings (Belgium)', '2017 Barcelona attacks (Spain)'),
+
+search <- tibble(Event = c('Charlie Hebdo shooting','November 2015 Paris attacks',
+                           '2016 Nice truck attack','2016 Berlin truck attack',
+                           'Boston Marathon bombings','Manchester Arena bombing',
+                           '2016 Brussels bombings', '2017 Barcelona attacks'),
                  TopicSearchCode = c('/m/012m7z4x','/g/11bwpyd6bz','/g/11c0rkxllm','/g/11c2nmxm9z',
                                      '/m/0t4zkny','/g/11df0whly0','/g/11cm88pk6n','/g/11f03_cv65'), # These were extracted manually from Google Trends
                  Country = c('FR','FR','FR','DE','US','GB','BE','ES'),
@@ -50,7 +51,8 @@ Output$Event <- as.factor(Output$Event)
 
 ## Reproduce Collins graph
 
-download.file("https://raw.githubusercontent.com/MatteoTiratelli/TimeDynamicsEmotionalEnergy/main/CollinsCurve.png", destfile = '/CollinsCurve.png', mode = 'wb')
+temp = tempfile(fileext = ".png")
+download.file("https://raw.githubusercontent.com/MatteoTiratelli/TimeDynamicsEmotionalEnergy/main/CollinsCurve.png", destfile = temp, mode = 'wb')
 
 Collins <- ggplot(Output, aes(x=row.number, y=as.numeric(hits))) +
   theme_classic() + 
@@ -65,14 +67,14 @@ Collins <- ggplot(Output, aes(x=row.number, y=as.numeric(hits))) +
         plot.background = element_rect(fill = "transparent", colour = NA))
 
 ggdraw() +
-  draw_image("CollinsCurve.png", x = -0.01, y = 0.03, scale = 0.8) +
+  draw_image(temp, x = -0.01, y = 0.03, scale = 0.8) +
   draw_plot(Collins) -> panel_a
 
 
 ## Create new graph
 
 Output$Event <- as.factor(Output$Event)
-Output$Event <- fct_relevel(Output$Event, "Charlie Hebdo shooting", after = Inf)
+Output$Event <- fct_relevel(Output$Event, "Charlie Hebdo shooting", 'Boston Marathon bombings', after = Inf)
 
 panel_b <- ggplot(Output, aes(x=row.number, y=as.numeric(hits))) +
   geom_line() + 
