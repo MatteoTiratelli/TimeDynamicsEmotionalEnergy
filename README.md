@@ -1,6 +1,6 @@
 # The Time-Dynamics of Emotional Energy
 
-This data visualisation uses Google Trends data to analyse the temporal pattern of emotional energy over time.
+https://matteotiratelli.github.io/Files/TimeDynamics.html
 
 - CollinsCurve.png: An image file containing the curve from Figure 13, Collins (2012).
 - CollinsGraph.pdf: The original graph from Figure 13, Collins (2012).
