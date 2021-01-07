@@ -1,6 +1,6 @@
 # The Time-Dynamics of Emotional Energy
 
-https://matteotiratelli.github.io/Files/TimeDynamics.html
+Write up available here: https://matteotiratelli.github.io/Files/TimeDynamics.html
 
 - CollinsCurve.png: An image file containing the curve from Figure 13, Collins (2012).
 - CollinsGraph.pdf: The original graph from Figure 13, Collins (2012).
